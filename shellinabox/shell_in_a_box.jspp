@@ -268,7 +268,7 @@ ShellInABox.prototype.keyPressReadyStateChange = function(request) {
   }
 };
 
-tmp='';
+hangulTmp = ''
 ShellInABox.prototype.keysPressed = function(ch) {
   var hex = '0123456789ABCDEF';
   var s   = '';
@@ -303,21 +303,20 @@ ShellInABox.prototype.keysPressed = function(ch) {
   // check hangul
   if (s[0] === 'E') {
     if (s.length > 6) {
-      tmp = s.substring(6);
-      if (tmp[0] !== 'E') {
-        tmp = '';
-        this.sendKeys(s+tmp);
+      hangulTmp = s.substring(6);
+      if (hangulTmp[0] !== 'E') {
+        hangulTmp = '';
+        this.sendKeys(s+hangulTmp);
       } else {
-        tmp='';
         this.sendKeys(s.substring(0,6));
       }
     }
   } else {
-      if (tmp !== '') {
-        this.sendKeys(tmp+s);
-        tmp='';
+      if (hangulTmp !== '') {
+        this.sendKeys(hangulTmp+s);
+        hangulTmp='';
       } else{
-        tmp='';
+        hangulTmp='';
         this.sendKeys(s);
       }
   }
