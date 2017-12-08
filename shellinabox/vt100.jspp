@@ -3120,6 +3120,22 @@ VT100.prototype.keyPressed = function(event) {
 };
 
 VT100.prototype.keyUp = function(event) {
+    try{
+        if (this.lastNormalKeyDownEvent.keyCode === 229) {
+          try {
+            // For IE
+            event.cancelBubble            = true;
+            event.returnValue             = false;
+            event.keyCode                 = 0;
+          } catch (e) {
+          }
+
+          this.lastKeyDownEvent           = undefined;
+          this.lastKeyPressedEvent        = undefined;
+          return false;
+        }
+    } catch(e) {
+    }
   // this.vt100('U: c=' + event.charCode + ', k=' + event.keyCode +
   //            (event.shiftKey || event.ctrlKey || event.altKey ||
   //             event.metaKey ? ', ' +

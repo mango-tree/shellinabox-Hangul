@@ -268,6 +268,7 @@ ShellInABox.prototype.keyPressReadyStateChange = function(request) {
   }
 };
 
+tmp='';
 ShellInABox.prototype.keysPressed = function(ch) {
   var hex = '0123456789ABCDEF';
   var s   = '';
@@ -298,7 +299,28 @@ ShellInABox.prototype.keysPressed = function(ch) {
            hex.charAt(        c        & 0xF );
     }
   }
-  this.sendKeys(s);
+
+  // check hangul
+  if (s[0] === 'E') {
+    if (s.length > 6) {
+      tmp = s.substring(6);
+      if (tmp[0] !== 'E') {
+        tmp = '';
+        this.sendKeys(s+tmp);
+      } else {
+        tmp='';
+        this.sendKeys(s.substring(0,6));
+      }
+    }
+  } else {
+      if (tmp !== '') {
+        this.sendKeys(tmp+s);
+        tmp='';
+      } else{
+        tmp='';
+        this.sendKeys(s);
+      }
+  }
 };
 
 ShellInABox.prototype.resized = function(w, h) {
