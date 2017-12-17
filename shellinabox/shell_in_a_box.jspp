@@ -310,6 +310,8 @@ ShellInABox.prototype.keysPressed = function(ch) {
       } else {
         this.sendKeys(s.substring(0,6));
       }
+    } else{
+      hangulTmp = s.substring(0);
     }
   } else {
       if (hangulTmp !== '') {
